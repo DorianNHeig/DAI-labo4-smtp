@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Group{
     private Person sender;
-    private ArrayList<Person> receiver;
+    private ArrayList<Person> receivers;
 
-    public Group(Person sender, ArrayList<Person> receiver){
+    public Group(Person sender, ArrayList<Person> receivers){
         this.sender = sender;
-        this.receiver = receiver;
+        this.receivers = receivers;
     }
     /*
     public void setSender(Person sender){
@@ -23,8 +23,8 @@ public class Group{
         return this.sender;
     }
 
-    public ArrayList<Person> getReceiver(){
-        return this.receiver;
+    public ArrayList<Person> getReceivers(){
+        return this.receivers;
     }
 
 }

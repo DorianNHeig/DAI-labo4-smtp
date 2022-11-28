@@ -24,8 +24,8 @@ public class Config {
         public int nb_group = 4;
         public int size_group = 4;
 
-        public List<Prank> pranks = new ArrayList<>();
-        public List<Person> persons = new ArrayList<>();
+        public transient List<Prank> pranks = new ArrayList<>();
+        public transient List<Person> persons = new ArrayList<>();
     }
 
     private ConfigData data;
@@ -55,15 +55,29 @@ public class Config {
         }
 
         try {
+            // Read toml file and set data
             this.data = new Toml().read(confFile).to(ConfigData.class);
         }catch(IllegalStateException e) {
             System.err.println(e);
             System.exit(1);
         }
 
+        // Error if the number of groups or the size of groups are too low
+        if(this.data.nb_group < 1) {
+            System.err.println("The number of groups must be greater than 0.\n The value as been set to 1.");
+            this.data.nb_group = 1;
+        }
+        if(this.data.size_group < 3) {
+            System.err.println("The size of groups must be greater than 2.\n The value as been set to 3.");
+            this.data.size_group = 3;
+        }
+
         // Read persons file
+        data.persons = new ArrayList<>();
 
         File personsFile = new File(PERSONS_PATH);
+
+        // Create the persons.txt file if not exists
         if(!personsFile.exists()){
             try{
                 personsFile.createNewFile();
@@ -75,11 +89,18 @@ public class Config {
         }
 
         try {
+            // Read the persons.txt file
             BufferedReader reader = new BufferedReader(new FileReader(PERSONS_PATH));
 
             String line = null;
             while((line = reader.readLine()) != null) {
                 if(line.startsWith("#")) continue;
+                // only add the person if the line contain a @
+                if(!line.contains("@")){
+                    System.err.println("Error: missing @ in the email address: " + line);
+                    continue;
+                }
+                
                 data.persons.add(new Person(line));
             }
 
@@ -94,13 +115,16 @@ public class Config {
         // Each prank is stored in individual file in PRANKS_FOLDER
         // The first line of the file represent the header (Email title)
 
+        data.pranks = new ArrayList<>();
         try {
             File folder = new File(PRANKS_DIR);
 
+            // Create the pranks folder if not exists
             if(!folder.exists()) {
                 folder.mkdirs();
             }
 
+            // Read all file inside pranks folder
             for(File prankFile : folder.listFiles()) {
                 BufferedReader reader = new BufferedReader(new FileReader(prankFile));
 
