@@ -7,10 +7,16 @@ import java.util.Random;
 public class PrankGenerator {
     private Config config;
 
+    /**
+     * Constructor of the PrankGenerator
+     */
     public PrankGenerator() {
         config = new Config();
     }
 
+    /**
+     * Start the prank with the config file
+     */
     public void startPrank() {
         System.out.println( "Start prank" );
         SmtpClient client = new SmtpClient(config.getServerIP(), config.getServerPort());
@@ -26,7 +32,10 @@ public class PrankGenerator {
         }
     }
 
-    // function to generate groups
+    /**
+     * Generate the groups for the prank
+     * @return List of groups
+     */
     private ArrayList<Group> generateGroups() {
         ArrayList<Group> groups = new ArrayList<>();
         Random rand = new Random();

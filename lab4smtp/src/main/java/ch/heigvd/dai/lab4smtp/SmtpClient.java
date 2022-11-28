@@ -12,12 +12,20 @@ public class SmtpClient{
     private String ip;
     private int port;
 
-    // load the server configuration
+    /**
+     * Constructor of the class SmtpClient to load the ip and the port
+     * @param ip the ip of the server
+     * @param port the port of the server
+     */
     public SmtpClient(String serverIP, int serverPort){
         this.ip = serverIP;
         this.port = serverPort;
     }
 
+    /**
+     * Method to send a mail to the server
+     * @param mail the mail to send
+     */
     public void sendMail(Mail mail){
         Person sender = mail.getGroup().getSender();
         ArrayList<Person> receivers = mail.getGroup().getReceivers();
