@@ -5,30 +5,41 @@ Authors: Joris Décoppet, Dorian Niclass
 ---
 
 ## Description
-This project is an implementation of an SMTP client in Java. It as been made for the DAI course at HEIG-VD. It's a server that can send emails containing a prank message to a list of victims.
+This project is an implementation of an SMTP client in Java. It as been made for the DAI course at HEIG-VD. It's a program that can send emails containing a prank message to a list of victims.
 The list of victims is read from a file, and the list of prank messages is read from another file. The server is configured with a configuration file.
 
 ## Mock Server
 
 ## Instructions
-To test the server we used an SMTP mock server. It's a server that will receive the emails and display them in a web interface. It's very useful to test the server without sending real emails.
+To test the server we used an SMTP mock server. It's a service that will receive the emails and display them in a web interface. It's very useful to test the program without sending real emails.
 
 ### Setting up mockmock
 
 You may need a mock server to test the application.  
 We used this docker image of mockmock : https://hub.docker.com/r/mmoayyed/mockmock
 
-First we need to pull the docker image  
+Pull the docker image  
 ```docker pull mmoayyed/mockmock```
 
-To start the container 
+Start the container  
 ```docker run -d -p 25:25000 -p 8282:8282 --name mockmock mmoayyed/mockmock```
 
 ### Setting up the PrankGenerator
-The configuration file is located at the root of the project in the folder **configs**. You have to set the **server_ip** as your mock server ip. You should change the **server_port** too. The parameter **nb_group** should be higher thant 0 ans it's the number of groups the programme will generate. The **size_group** parameter is used to specify the number of person in each group. Containing the sender and all the victims. This number should be higher than 2.
+The configuration file is located at the root of the project in the folder **configs**.  
+Default configuration file content:  
+```
+server_ip = "127.0.0.1"
+server_port = 25000
+nb_group = 4
+size_group = 4
+```
+
+**server_ip** and **server_port** is the address of the SMTP server you want to use. Set it to your mockmock instance for testing.  
+**nb_group** is the number of group of people you want to form. It should be higher than 0.  
+**size_group** is the number of people in each group. One of these person will be the sender of the mail, the others the victims. It should be higher than 2 (1 sender and 2 victims).
 
 #### Add pranks
-To add a prank into the application you have to create a file in the folder **configs/prank**. The name of the file is not important. The prank should be written with an header in the first line and a body as you want in the other lines. The header is the subject of the email. The body is the content of the email.
+To add a prank into the application you have to create a file in the folder **configs/prank**. The names of the files are not important. The prank should be written with an header in the first line and a body as you want in the other lines. The header is the subject of the email. The body is the content of the email.
 
 #### Add persons
 To add a new victim you have to add the email in the file **persons.txt** located in the folder **configs**. You have to add one email per line.
