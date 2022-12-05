@@ -19,6 +19,17 @@ public class PrankGenerator {
      */
     public void startPrank() {
         System.out.println( "Start prank" );
+
+        if (config.getPersons().size() == 0) {
+            System.err.println("The persons list is empty. Quitting.");
+            System.exit(1);
+        }
+
+        if (config.getPranks().size() == 0) {
+            System.err.println("The pranks folder is empty. Quitting.");
+            System.exit(1);
+        }
+            
         SmtpClient client = new SmtpClient(config.getServerIP(), config.getServerPort());
         
         List<Group> groups = generateGroups();
