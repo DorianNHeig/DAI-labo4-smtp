@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +127,7 @@ public class Config {
 
             // Read all file inside pranks folder
             for(File prankFile : folder.listFiles()) {
-                BufferedReader reader = new BufferedReader(new FileReader(prankFile));
+                BufferedReader reader = new BufferedReader(new FileReader(prankFile, StandardCharsets.UTF_8));
 
                 String prankHeader = "";
                 String prankBody = "";

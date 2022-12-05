@@ -35,7 +35,6 @@ public class SmtpClient{
 
         // socket connection
         try{
-            System.out.println(String.format("IP: %s, Port %d", ip, port));
             Socket socket = new Socket(ip, port);
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             
@@ -65,6 +64,8 @@ public class SmtpClient{
 
             os.close();
             socket.close();
+
+            System.out.println("Mail sent !");
         }catch(UnknownHostException e){
             System.out.println("Error : Unknown host (" + ip + ":" + port + ") not found");
         }catch(IOException e){
